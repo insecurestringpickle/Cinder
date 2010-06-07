@@ -51,7 +51,7 @@ class OscListener : public ::osc::OscPacketListener
 
 		void setup(int listen_port);
 
-    	void addCallback( boost::function<void(Message*)> callbackFunction );
+		void addCallback( boost::function<void(Message*)> callbackFunction );
 
 		bool hasWaitingMessages();
 		bool getNextMessage(Message*);
@@ -64,8 +64,8 @@ class OscListener : public ::osc::OscPacketListener
 	private:
 		void threadSocket();
 
-	    deque< Message* > mMessages;
-    	deque< boost::function<void(Message*)> > mCallbacks;
+		deque< Message* > mMessages;
+		deque< boost::function<void(Message*)> > mCallbacks;
 
 		UdpListeningReceiveSocket* mListen_socket;
 
@@ -144,12 +144,12 @@ void OscListener::ProcessMessage( const ::osc::ReceivedMessage &m, const IpEndpo
 
 	mMessages.push_back(message);
 
-    // Dispatch Messages
-    deque< boost::function<void(Message*)> >::iterator callback = mCallbacks.begin();
+	// Dispatch Messages
+	deque< boost::function<void(Message*)> >::iterator callback = mCallbacks.begin();
 	for(; callback != mCallbacks.end(); callback++){
-        if(!callback->empty())
+		if(!callback->empty())
 			(*callback)(message);
-    }
+	}
 }
 
 bool OscListener::hasWaitingMessages(){
@@ -181,23 +181,23 @@ bool OscListener::getNextMessage(Message* message){
 
 
 Listener::Listener(){
-    oscListener = shared_ptr<OscListener>( new OscListener );
+	oscListener = shared_ptr<OscListener>( new OscListener );
 }
 
 void Listener::setup(int listen_port){
-    oscListener->setup(listen_port);
+	oscListener->setup(listen_port);
 }
 
 void Listener::addCallback( boost::function<void(Message*)> callbackFunction ){
-    oscListener->addCallback(callbackFunction);
+	oscListener->addCallback(callbackFunction);
 }
 
 bool Listener::hasWaitingMessages(){
-    return oscListener->hasWaitingMessages();
+	return oscListener->hasWaitingMessages();
 }
 
 bool Listener::getNextMessage(Message* message){
-    return oscListener->getNextMessage(message);
+	return oscListener->getNextMessage(message);
 }
 
 

@@ -41,7 +41,7 @@ namespace cinder { namespace osc {
 
 		void setup(int listen_port);
 
-        void addCallback( boost::function<void(Message* msg)> callbackFunction );
+		void addCallback( boost::function<void(Message* msg)> callbackFunction );
 
 		bool hasWaitingMessages();
 		bool getNextMessage(Message*);
