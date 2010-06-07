@@ -2,18 +2,18 @@
  Copyright (c) 2010, Hector Sanchez-Pajares
  Aer Studio http://www.aerstudio.com
  All rights reserved.
- 
- 
+
+
  This is a block for OSC Integration for Cinder framework developed by The Barbarian Group, 2010
- 
+
  Redistribution and use in source and binary forms, with or without modification, are permitted provided that
  the following conditions are met:
- 
+
  * Redistributions of source code must retain the above copyright notice, this list of conditions and
  the following disclaimer.
  * Redistributions in binary form must reproduce the above copyright notice, this list of conditions and
  the following disclaimer in the documentation and/or other materials provided with the distribution.
- 
+
  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED
  WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A
  PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
@@ -30,24 +30,25 @@
 #include "OscMessage.h"
 #include "OscArg.h"
 
+#include <boost/function.hpp>
 
 namespace cinder { namespace osc {
-	
+
 	class Listener {
-		
+
 	public:
 		Listener();
-		
+
 		void setup(int listen_port);
-		
+
+        void addCallback( boost::function<void(Message* msg)> callbackFunction );
+
 		bool hasWaitingMessages();
-		
 		bool getNextMessage(Message*);
-		
+
 	private:
-		
-		 shared_ptr<class OscListener>   oscListener;
-	
+		 shared_ptr<class OscListener> oscListener;
+
 	};
 
 } // namespace osc
