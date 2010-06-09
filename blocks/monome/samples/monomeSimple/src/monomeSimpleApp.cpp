@@ -1,8 +1,9 @@
 #include "cinder/app/AppBasic.h"
-#include "OscMonome64.h"
+#include "Monome64.h"
 
 using namespace ci;
 using namespace ci::app;
+using namespace ci::monome;
 using namespace std;
 
 class monomeSimpleApp : public AppBasic {
@@ -13,7 +14,7 @@ class monomeSimpleApp : public AppBasic {
 
     void onMonomeButton(MonomeButtonEvent* e);
 
-    OscMonome64 monome;
+    Monome64 monome;
 };
 
 void monomeSimpleApp::prepareSettings(Settings *settings)
@@ -26,12 +27,12 @@ void monomeSimpleApp::setup()
 {
     monome.init("localhost", 8000, 8080);
     monome.addCallback(boost::bind(&monomeSimpleApp::onMonomeButton, this, _1));
-    monome.clearLeds(OscMonome64::OFF);
+    monome.clearLeds(Monome64::OFF);
 }
 
 void monomeSimpleApp::onMonomeButton(MonomeButtonEvent* e)
 {
-	if(e->state == OscMonome64::DOWN){
+	if(e->state == Monome64::DOWN){
     	monome.toggleLed(e->x, e->y);
     }
 }
@@ -40,11 +41,12 @@ void monomeSimpleApp::draw()
 {
     gl::clear();
 
+    // Draw LED States
     float lw = (float)getWindowWidth() / monome.nx;
     float lh = (float)getWindowHeight() / monome.ny;
     for(int x = 0; x < monome.nx; x++){
         for(int y = 0; y < monome.ny; y++){
-        	if(monome.getLed(x, y) == OscMonome64::ON){
+        	if(monome.getLed(x, y) == Monome64::ON){
                 glColor3f(1, 1, 1);
                 gl::drawSolidRect(Rectf(
                 	lw * x + 10,      lh * y + 10,

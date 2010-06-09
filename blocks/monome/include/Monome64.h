@@ -11,19 +11,20 @@
 
 #include <list>
 
-using namespace ci;
 using namespace std;
+
+namespace cinder{ namespace monome{
 
 struct MonomeButtonEvent
 {
     int x, y, state;
 };
 
-class OscMonome64
+class Monome64
 {
   public:
-    OscMonome64();
-    ~OscMonome64();
+    Monome64();
+    ~Monome64();
 
     void init(string _host, int _port_in, int _port_out);
     void setBaseName(string _basename);
@@ -67,3 +68,5 @@ class OscMonome64
 
     list< boost::function<void(MonomeButtonEvent*)> > callbacks;
 };
+
+}}

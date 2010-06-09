@@ -29,7 +29,7 @@
 		9441EBA511BF0254001F2BA6 /* OscListener.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9441EB8711BF0254001F2BA6 /* OscListener.cpp */; };
 		9441EBA611BF0254001F2BA6 /* OscMessage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9441EB8811BF0254001F2BA6 /* OscMessage.cpp */; };
 		9441EBA711BF0254001F2BA6 /* OscSender.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9441EB8911BF0254001F2BA6 /* OscSender.cpp */; };
-		9441EBEA11BF0264001F2BA6 /* OscMonome64.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9441EBD911BF0264001F2BA6 /* OscMonome64.cpp */; };
+		9441EBEA11BF0264001F2BA6 /* Monome64.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9441EBD911BF0264001F2BA6 /* Monome64.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -79,8 +79,8 @@
 		9441EB8711BF0254001F2BA6 /* OscListener.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = OscListener.cpp; sourceTree = "<group>"; };
 		9441EB8811BF0254001F2BA6 /* OscMessage.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = OscMessage.cpp; sourceTree = "<group>"; };
 		9441EB8911BF0254001F2BA6 /* OscSender.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = OscSender.cpp; sourceTree = "<group>"; };
-		9441EBB811BF0264001F2BA6 /* OscMonome64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OscMonome64.h; sourceTree = "<group>"; };
-		9441EBD911BF0264001F2BA6 /* OscMonome64.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = OscMonome64.cpp; sourceTree = "<group>"; };
+		9441EBB811BF0264001F2BA6 /* Monome64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Monome64.h; sourceTree = "<group>"; };
+		9441EBD911BF0264001F2BA6 /* Monome64.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Monome64.cpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -322,7 +322,7 @@
 		9441EBB711BF0264001F2BA6 /* include */ = {
 			isa = PBXGroup;
 			children = (
-				9441EBB811BF0264001F2BA6 /* OscMonome64.h */,
+				9441EBB811BF0264001F2BA6 /* Monome64.h */,
 			);
 			path = include;
 			sourceTree = "<group>";
@@ -330,7 +330,7 @@
 		9441EBD811BF0264001F2BA6 /* src */ = {
 			isa = PBXGroup;
 			children = (
-				9441EBD911BF0264001F2BA6 /* OscMonome64.cpp */,
+				9441EBD911BF0264001F2BA6 /* Monome64.cpp */,
 			);
 			path = src;
 			sourceTree = "<group>";
@@ -394,7 +394,7 @@
 				9441EBA511BF0254001F2BA6 /* OscListener.cpp in Sources */,
 				9441EBA611BF0254001F2BA6 /* OscMessage.cpp in Sources */,
 				9441EBA711BF0254001F2BA6 /* OscSender.cpp in Sources */,
-				9441EBEA11BF0264001F2BA6 /* OscMonome64.cpp in Sources */,
+				9441EBEA11BF0264001F2BA6 /* Monome64.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
