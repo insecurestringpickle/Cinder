@@ -67,6 +67,8 @@ class Monome
 
 
   protected:
+    void wipeArrays();
+
     void setLedColRow(string addr, int i, int states[], int length);
     void msgPackStates(osc::Message* msg, int states[], int length);
 

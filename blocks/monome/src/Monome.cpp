@@ -18,12 +18,18 @@ Monome::Monome(string _basename, int _nx, int _ny)
 {
     setSize(_nx, _ny);
     setBaseName(_basename);
-    cout << endl << led_clear_addr << endl << endl;
 }
+
 Monome::~Monome()
 {
-    delete [] ledState;
-    delete [] buttonState;
+    wipeArrays();
+}
+void Monome::wipeArrays()
+{
+    if(ledState != 0)
+        delete [] ledState;
+    if(buttonState != 0)
+        delete [] buttonState;
 }
 
 
@@ -55,6 +61,7 @@ void Monome::setBaseName(string _basename)
 
 void Monome::setSize(int _nx, int _ny)
 {
+    wipeArrays();
     nx = _nx;
     ny = _ny;
 	ledState    = new int[nx * ny];
@@ -163,8 +170,6 @@ void Monome::clearLeds(int state)
     msg.addIntArg(state);
 
     osc_out.sendMessage(msg);
-
-    cout << endl << "sent clear" << endl << endl;
 
     for(int y = ny; --y >= 0;)
         for(int x = nx; --x >= 0;)
