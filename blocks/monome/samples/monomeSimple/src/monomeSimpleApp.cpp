@@ -1,12 +1,13 @@
 #include "cinder/app/AppBasic.h"
-#include "Monome64.h"
+#include "Monome.h"
 
 using namespace ci;
 using namespace ci::app;
 using namespace ci::monome;
 using namespace std;
 
-class monomeSimpleApp : public AppBasic {
+class monomeSimpleApp : public AppBasic
+{
   public:
     void prepareSettings(Settings *settings);
     void setup();
@@ -27,12 +28,12 @@ void monomeSimpleApp::setup()
 {
     monome.init("localhost", 8000, 8080);
     monome.addCallback(boost::bind(&monomeSimpleApp::onMonomeButton, this, _1));
-    monome.clearLeds(Monome64::OFF);
+    monome.clearLeds(Monome::OFF);
 }
 
 void monomeSimpleApp::onMonomeButton(MonomeButtonEvent* e)
 {
-	if(e->state == Monome64::DOWN){
+	if(e->state == Monome::DOWN){
     	monome.toggleLed(e->x, e->y);
     }
 }
@@ -46,7 +47,7 @@ void monomeSimpleApp::draw()
     float lh = (float)getWindowHeight() / monome.ny;
     for(int x = 0; x < monome.nx; x++){
         for(int y = 0; y < monome.ny; y++){
-        	if(monome.getLed(x, y) == Monome64::ON){
+        	if(monome.getLed(x, y) == Monome::ON){
                 glColor3f(1, 1, 1);
                 gl::drawSolidRect(Rectf(
                 	lw * x + 10,      lh * y + 10,

@@ -20,16 +20,20 @@ struct MonomeButtonEvent
     int x, y, state;
 };
 
-class Monome64
+typedef boost::function<void(MonomeButtonEvent*)> MonomeCallback;
+
+class Monome
 {
   public:
-    Monome64();
-    ~Monome64();
+    Monome();
+    Monome(string _basename, int _nx, int _ny);
+    ~Monome();
 
     void init(string _host, int _port_in, int _port_out);
     void setBaseName(string _basename);
+    void setSize(int _nx, int _ny);
 
-    void addCallback(boost::function<void(MonomeButtonEvent*)> callback);
+    void addCallback(MonomeCallback callback);
     void onOscMessage(osc::Message* msg);
 
     void setLed(int x, int y, int state);
@@ -39,6 +43,8 @@ class Monome64
     void toggleLed(int x, int y);
     void toggleLedCol(int x);
     void toggleLedRow(int y);
+
+    void setLedFrame(int states[]);
 
     int getLed(int x, int y);
 
@@ -56,17 +62,33 @@ class Monome64
     string basename;
     string press_addr, led_addr, led_col_addr, led_row_addr, led_frame_addr, led_clear_addr, led_intensity_addr;
 
-    static const int nx = 8, ny = 8; // HACK: this should be variable
-
-    int ledState[nx][ny];
-    int buttonState[nx][ny];
+    int nx, ny;
+    int *ledState, *buttonState;
 
 
   protected:
     void setLedColRow(string addr, int i, int states[], int length);
     void msgPackStates(osc::Message* msg, int states[], int length);
 
-    list< boost::function<void(MonomeButtonEvent*)> > callbacks;
+    list<MonomeCallback> callbacks;
+};
+
+class Monome64 : public Monome
+{
+  public:
+	Monome64() : Monome("/64", 8, 8){}
+};
+
+class Monome128 : public Monome
+{
+  public:
+    Monome128() : Monome("/128", 16, 8){}
+};
+
+class Monome256 : public Monome
+{
+  public:
+    Monome256() : Monome("/256", 16, 16){}
 };
 
 }}

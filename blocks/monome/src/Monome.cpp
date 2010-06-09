@@ -1,37 +1,45 @@
-#include "Monome64.h"
+#include "Monome.h"
 
 namespace cinder{ namespace monome{
 
 
-const int Monome64::ON  = 1;
-const int Monome64::OFF = 0;
+const int Monome::ON  = 1;
+const int Monome::OFF = 0;
 
-const int Monome64::UP   = 0;
-const int Monome64::DOWN = 1;
+const int Monome::UP   = 0;
+const int Monome::DOWN = 1;
 
 
-Monome64::Monome64()
-{
+Monome::Monome(){
+    setSize(8, 8);
     setBaseName("/64");
 }
-Monome64::~Monome64()
+Monome::Monome(string _basename, int _nx, int _ny)
 {
+    setSize(_nx, _ny);
+    setBaseName(_basename);
+    cout << endl << led_clear_addr << endl << endl;
+}
+Monome::~Monome()
+{
+    delete [] ledState;
+    delete [] buttonState;
 }
 
 
-void Monome64::init(string _host, int _port_in, int _port_out)
+void Monome::init(string _host, int _port_in, int _port_out)
 {
     osc_host     = _host;
     osc_port_in  = _port_in;
     osc_port_out = _port_out;
 
     osc_in.setup(osc_port_in);
-    osc_in.addCallback(boost::bind(&Monome64::onOscMessage, this, _1));
+    osc_in.addCallback(boost::bind(&Monome::onOscMessage, this, _1));
 
     osc_out.setup(osc_host, osc_port_out);
 }
 
-void Monome64::setBaseName(string _basename)
+void Monome::setBaseName(string _basename)
 {
     basename = _basename[0] == '/' ? _basename : "/" + _basename;
 
@@ -45,13 +53,21 @@ void Monome64::setBaseName(string _basename)
     led_intensity_addr = basename + "/intensity";
 }
 
+void Monome::setSize(int _nx, int _ny)
+{
+    nx = _nx;
+    ny = _ny;
+	ledState    = new int[nx * ny];
+    buttonState = new int[nx * ny];
+}
 
-void Monome64::addCallback(boost::function<void(MonomeButtonEvent*)> callback)
+
+void Monome::addCallback(MonomeCallback callback)
 {
     callbacks.push_back(callback);
 }
 
-void Monome64::onOscMessage(osc::Message* msg)
+void Monome::onOscMessage(osc::Message* msg)
 {
 	if(msg->getAddress() == press_addr){
         MonomeButtonEvent event;
@@ -61,7 +77,7 @@ void Monome64::onOscMessage(osc::Message* msg)
         event.state = msg->getArgAsInt32(2, false);
 
         // Dispatch Event
-        list< boost::function<void(MonomeButtonEvent*)> >::iterator callback = callbacks.begin();
+        list<MonomeCallback>::iterator callback = callbacks.begin();
         for(; callback != callbacks.end(); callback++){
             if(!callback->empty())
                 (*callback)(&event);
@@ -70,12 +86,12 @@ void Monome64::onOscMessage(osc::Message* msg)
 }
 
 
-int Monome64::getLed(int x, int y)
+int Monome::getLed(int x, int y)
 {
-    return ledState[y][x];
+    return ledState[y*ny + x];
 }
 
-void Monome64::setLed(int x, int y, int state)
+void Monome::setLed(int x, int y, int state)
 {
     osc::Message msg;
     msg.setAddress(led_addr);
@@ -87,45 +103,45 @@ void Monome64::setLed(int x, int y, int state)
 
     osc_out.sendMessage(msg);
 
-    ledState[y][x] = state;
+    ledState[y*ny + x] = state;
 }
-void Monome64::toggleLed(int x, int y)
+void Monome::toggleLed(int x, int y)
 {
-    setLed(x, y, ledState[y][x] == OFF ? ON : OFF);
+    setLed(x, y, ledState[y*ny + x] == OFF ? ON : OFF);
 }
 
 
-void Monome64::setLedCol(int x, int states[])
+void Monome::setLedCol(int x, int states[])
 {
     setLedColRow(led_col_addr, x, states, ny);
 
     for(int i = ny; --i >= 0;)
-        ledState[i][x] = states[i];
+        ledState[i*ny + x] = states[i];
 }
-void Monome64::toggleLedCol(int x)
+void Monome::toggleLedCol(int x)
 {
     int col[nx];
     for(int i = ny; --i >= 0;)
-        col[i] = ledState[i][x] == OFF ? ON : OFF;
+        col[i] = ledState[i*ny + x] == OFF ? ON : OFF;
     setLedCol(x, col);
 }
 
-void Monome64::setLedRow(int y, int states[])
+void Monome::setLedRow(int y, int states[])
 {
     setLedColRow(led_row_addr, y, states, nx);
 
     for(int i = nx; --i >= 0;)
-        ledState[y][i] = states[i];
+        ledState[y*ny + i] = states[i];
 }
-void Monome64::toggleLedRow(int y)
+void Monome::toggleLedRow(int y)
 {
     int row[ny];
     for(int i = nx; --i >= 0;)
-        row[i] = ledState[y][i] == OFF ? ON : OFF;
+        row[i] = ledState[y*ny + i] == OFF ? ON : OFF;
     setLedRow(y, row);
 }
 
-void Monome64::setLedColRow(string addr, int i, int states[], int length)
+void Monome::setLedColRow(string addr, int i, int states[], int length)
 {
     osc::Message msg;
     msg.setAddress(addr);
@@ -138,7 +154,7 @@ void Monome64::setLedColRow(string addr, int i, int states[], int length)
 }
 
 
-void Monome64::clearLeds(int state)
+void Monome::clearLeds(int state)
 {
     osc::Message msg;
     msg.setAddress(led_clear_addr);
@@ -148,13 +164,15 @@ void Monome64::clearLeds(int state)
 
     osc_out.sendMessage(msg);
 
+    cout << endl << "sent clear" << endl << endl;
+
     for(int y = ny; --y >= 0;)
         for(int x = nx; --x >= 0;)
-            ledState[y][x] = state;
+            ledState[y*ny + x] = state;
 }
 
 
-void Monome64::msgPackStates(osc::Message* msg, int states[], int length)
+void Monome::msgPackStates(osc::Message* msg, int states[], int length)
 {
     for(int s = 0, i = 0, n = (int)ceil(length / 32.0); i < n; i++){
         int32_t packed = 0;
