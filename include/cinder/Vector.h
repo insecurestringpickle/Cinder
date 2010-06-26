@@ -474,7 +474,7 @@ public:
 		z = nz;
 	}
 
-    void rotateX(T ax)
+	void rotateX(T ax)
 	{
 		T sa = sin(ax);
 		T ca = cos(ax);
