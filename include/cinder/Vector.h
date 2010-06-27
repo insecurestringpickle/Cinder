@@ -464,7 +464,7 @@ public:
 		T b = sin( toRadians( ax ) );
 		T c = cos( toRadians( ay ) );
 		T d = sin( toRadians( ay ) );
-		T e = cos( toRadians( az )  );
+		T e = cos( toRadians( az ) );
 		T f = sin( toRadians( az ) );
 		T nx = c*e*x - c*f*y + d*z;
 		T ny = ( a*f + b*d*e ) * x + (a*e - b*d*f) * y - b*c*z;
@@ -476,8 +476,8 @@ public:
 
 	void rotateX(T ax)
 	{
-		T sa = sin(ax);
-		T ca = cos(ax);
+		T sa = sin( toRadians( ax ) );
+		T ca = cos( toRadians( ax ) );
 		T ry = y*ca - z*sa;
 		T rz = y*sa + z*ca;
 		y = ry;
@@ -486,8 +486,8 @@ public:
 
 	void rotateY(T ay)
 	{
-		T sa = sin(ay);
-		T ca = cos(ay);
+		T sa = sin( toRadians( ay ) );
+		T ca = cos( toRadians( ay ) );
 		T rx = x*ca - z*sa;
 		T rz = x*sa + z*ca;
 		x = rx;
@@ -496,8 +496,8 @@ public:
 
 	void rotateZ(T az)
 	{
-		T sa = sin(az);
-		T ca = cos(az);
+		T sa = sin( toRadians( az ) );
+		T ca = cos( toRadians( az ) );
 		T rx = x*ca - y*sa;
 		T ry = x*sa + y*ca;
 		x = rx;
