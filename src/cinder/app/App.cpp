@@ -176,7 +176,7 @@ void App::privateShutdown__()
 {
 	shutdown();
 }
-	
+
 DataSourceRef App::loadResource( const std::string &macPath, int mswID, const std::string &mswType )
 {
 #if defined( CINDER_COCOA )
@@ -208,19 +208,27 @@ string App::getResourcePath( const std::string &rsrcRelativePath )
 {
 	string path = getPathDirectory( rsrcRelativePath );
 	string fileName = getPathFileName( rsrcRelativePath );
-	
+
 	if( fileName.empty() )
 		return string();
-	
+
 	NSString *pathNS = 0;
 	if( ( ! path.empty() ) && ( path != rsrcRelativePath ) )
 		pathNS = [NSString stringWithUTF8String:path.c_str()];
-	
+
 	NSString *resultPath = [[NSBundle mainBundle] pathForResource:[NSString stringWithUTF8String:fileName.c_str()] ofType:nil inDirectory:pathNS];
 	if( ! resultPath )
 		return std::string();
-	
+
 	return string([resultPath cStringUsingEncoding:NSUTF8StringEncoding]);
+}
+string App::getResourcePath()
+{
+    char path[4096];
+    CFURLRef url = CFBundleCopyResourcesDirectoryURL( CFBundleGetMainBundle() );
+    CFURLGetFileSystemRepresentation( url, true, (UInt8*)path, 4096 );
+
+    return string(path);
 }
 #endif
 
@@ -234,7 +242,7 @@ string App::getOpenFilePath( const string &initialPath, vector<string> extension
 	[cinderOpen setCanChooseFiles:YES];
 	[cinderOpen setCanChooseDirectories:NO];
 	[cinderOpen setAllowsMultipleSelection:NO];
-	
+
 	NSMutableArray *typesArray = nil;
 	if( ! extensions.empty() ) {
 		typesArray = [NSMutableArray arrayWithCapacity:extensions.size()];
@@ -243,7 +251,7 @@ string App::getOpenFilePath( const string &initialPath, vector<string> extension
 	}
 
 	NSString *directory = initialPath.empty() ? nil : [[NSString stringWithUTF8String:initialPath.c_str()] stringByExpandingTildeInPath];
-	int resultCode = [cinderOpen runModalForDirectory:directory file:nil types:typesArray];	
+	int resultCode = [cinderOpen runModalForDirectory:directory file:nil types:typesArray];
 
 	setFullScreen( wasFullScreen );
 	restoreWindowContext();
@@ -266,18 +274,18 @@ string App::getFolderPath( const string &initialPath )
 #if defined( CINDER_MAC )
 	bool wasFullScreen = isFullScreen();
 	setFullScreen(false);
-	
+
 	NSOpenPanel *cinderOpen = [NSOpenPanel openPanel];
 	[cinderOpen setCanChooseFiles:NO];
 	[cinderOpen setCanChooseDirectories:YES];
 	[cinderOpen setAllowsMultipleSelection:NO];
-	
+
 	NSString *directory = initialPath.empty() ? nil : [[NSString stringWithUTF8String:initialPath.c_str()] stringByExpandingTildeInPath];
-	int resultCode = [cinderOpen runModalForDirectory:directory file:nil types:nil];	
-	
+	int resultCode = [cinderOpen runModalForDirectory:directory file:nil types:nil];
+
 	setFullScreen(wasFullScreen);
 	restoreWindowContext();
-	
+
 	if(resultCode == NSOKButton) {
 		NSString *result = [[cinderOpen filenames] objectAtIndex:0];
 		return string([result UTF8String]);
@@ -298,7 +306,7 @@ string	App::getSaveFilePath( const string &initialPath, vector<string> extension
 	setFullScreen( false );
 
 	NSSavePanel *cinderSave = [NSSavePanel savePanel];
-	
+
 	NSMutableArray *typesArray = nil;
 	if( ! extensions.empty() ) {
 		typesArray = [NSMutableArray arrayWithCapacity:extensions.size()];
@@ -319,7 +327,7 @@ string	App::getSaveFilePath( const string &initialPath, vector<string> extension
 		}
 		else {
 			file = [directory lastPathComponent];
-			directory = [directory stringByDeletingLastPathComponent];			
+			directory = [directory stringByDeletingLastPathComponent];
 		}
 	}
 	int resultCode = [cinderSave runModalForDirectory:directory file:file];
@@ -400,7 +408,7 @@ App::Settings::Settings()
 	mResizable = true;
 	mWindowSizeX = 640;
 	mWindowSizeY = 480;
-		
+
 	mPowerManagement = false;
 	mFrameRate = 60.0f;
 }
@@ -410,7 +418,7 @@ void App::Settings::setWindowSize( int aWindowSizeX, int aWindowSizeY )
 	mWindowSizeX = aWindowSizeX;
 	mWindowSizeY = aWindowSizeY;
 }
-	
+
 void App::Settings::setFrameRate( float aFrameRate )
 {
 	mFrameRate = aFrameRate;
