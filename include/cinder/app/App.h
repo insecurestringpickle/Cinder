@@ -56,7 +56,7 @@
 
 #include <vector>
 
-namespace cinder { namespace app { 
+namespace cinder { namespace app {
 
 class App {
  public:
@@ -84,7 +84,7 @@ class App {
 		Vec2i	getWindowSize() const { return Vec2i( mWindowSizeX, mWindowSizeY ); }
 		//! the size of the application's window specified in pixels. \return cinder::Area( 0, 0, width in pixels, height in pixels )
 		Area	getWindowBounds() const { return Area( 0, 0, mWindowSizeX, mWindowSizeY ); }
-		
+
 		//! the title of the app reflected in ways particular to the app type and platform (such as its Window or menu)
 		const std::string& getTitle() const { return mTitle; }
 		//! the title of the app reflected in ways particular to the app type and platform (such as its Window or menu)
@@ -99,8 +99,8 @@ class App {
 
 	  protected:
 		Settings();
-		virtual ~Settings() {}	  
-	  
+		virtual ~Settings() {}
+
 		bool			mShouldQuit; // defaults to false, facilitates early termination
 		int				mWindowSizeX, mWindowSizeY; // default: 640x480
 		bool			mFullScreen; // window covers screen. default: false
@@ -125,26 +125,26 @@ class App {
 	virtual void	update() {}
 	//! Override to perform any rendering once-per-loop or in response to OS-prompted requests for refreshes.
 	virtual void	draw() {}
-	
+
 	//! Override to receive mouse-down events.
 	virtual void	mouseDown( MouseEvent event ) {}
 	//! Override to receive mouse-up events.
-	virtual void	mouseUp( MouseEvent event ) {}	
+	virtual void	mouseUp( MouseEvent event ) {}
 	//! Override to receive mouse-wheel events.
 	virtual void	mouseWheel( MouseEvent event ) {}
 	//! Override to receive mouse-move events.
 	virtual void	mouseMove( MouseEvent event ) {}
 	//! Override to receive mouse-drag events.
-	virtual void	mouseDrag( MouseEvent event ) {}	
+	virtual void	mouseDrag( MouseEvent event ) {}
 	//! Override to receive key-down events.
 	virtual void	keyDown( KeyEvent event ) {}
 	//! Override to receive key-up events.
 	virtual void	keyUp( KeyEvent event ) {}
 	//! Override to receive window resize events.
 	virtual void	resize( int width, int height ) {}
-	//! Override to receive file-drop events.	
+	//! Override to receive file-drop events.
 	virtual void	fileDrop( FileDropEvent event ) {}
-	
+
 	//! Quits the application gracefully
 	virtual void	quit() = 0;
 
@@ -164,33 +164,33 @@ class App {
 	//! Adds a Listener to the App's event listeners. The app <tt>delete</tt>s \a listener upon its own destruction unless it is removed via removeListener
 	void		addListener( Listener *listener );
 	//! Removes a listener from the App's event listeners. Does not <tt>delete</tt> \a listener.
-	void		removeListener( Listener *listener ); 
+	void		removeListener( Listener *listener );
 
 	// Accessors
 	virtual const Settings&	getSettings() const = 0;
 	Renderer*				getRenderer() const { return mRenderer.get(); }
-	
-	//! Returns the width of the App's window measured in pixels, or the screen when in full-screen mode.	
+
+	//! Returns the width of the App's window measured in pixels, or the screen when in full-screen mode.
 	virtual int			getWindowWidth() const = 0;
-	//! Sets the width of the App's window measured in pixels. Ignored in full-screen mode.	
+	//! Sets the width of the App's window measured in pixels. Ignored in full-screen mode.
 	virtual void		setWindowWidth( int windowWidth ) = 0;
-	//! Returns the height of the App's window measured in pixels, or the screen when in full-screen mode.	
+	//! Returns the height of the App's window measured in pixels, or the screen when in full-screen mode.
 	virtual int			getWindowHeight() const = 0;
-	//! Sets the height of the App's window measured in pixels. Ignored in full-screen mode.	
+	//! Sets the height of the App's window measured in pixels. Ignored in full-screen mode.
 	virtual void		setWindowHeight( int windowHeight ) = 0;
 	//! Sets the size of the App's window. Ignored in full-screen mode.
 	virtual void		setWindowSize( int windowWidth, int windowHeight ) = 0;
 	//! Sets the size of the App's window. Ignored in full-screen mode.
 	void				setWindowSize( const Vec2i &size ) { setWindowSize( size.x, size.y ); }
 	//! Returns the center of the App's window or the screen in full-screen mode.
-	/** Equivalent to \code Vec2f( getWindowWidth() * 0.5, getWindowHeight() * 0.5 ) \endcode **/	
+	/** Equivalent to \code Vec2f( getWindowWidth() * 0.5, getWindowHeight() * 0.5 ) \endcode **/
 	Vec2f				getWindowCenter() const { return Vec2f( (float)getWindowWidth(), (float)getWindowHeight() ) * 0.5f; }
 	//! Returns the size of the App's window or the screen in full-screen mode
 	Vec2i				getWindowSize() const { return Vec2i( getWindowWidth(), getWindowHeight() ); }
 	//! Returns the aspect ratio of the App's window or the screen in full-screen mode
 	float				getWindowAspectRatio() const { return getWindowWidth() / (float)getWindowHeight(); }
 	//! Returns the bounding area of the App's window or the screen in full-screen mode.
-	/** Equivalent to \code Area( 0, 0, getWindowWidth(), getWindowHeight() ); \endcode **/	
+	/** Equivalent to \code Area( 0, 0, getWindowWidth(), getWindowHeight() ); \endcode **/
 	Area				getWindowBounds() const { return Area( 0, 0, getWindowWidth(), getWindowHeight() ); }
 	//! Returns the maximum frame-rate the App will attempt to maintain.
 	virtual float		getFrameRate() const = 0;
@@ -201,7 +201,7 @@ class App {
 	//! Returns the sampling rate in seconds for measuring the average frame-per-second as returned by getAverageFps()
 	double				getFpsSampleInterval() const { return mFpsSampleInterval; }
 	//! Sets the sampling rate in seconds for measuring the average frame-per-second as returned by getAverageFps()
-	void				setFpsSampleInterval( double sampleInterval ) { mFpsSampleInterval = sampleInterval; }	
+	void				setFpsSampleInterval( double sampleInterval ) { mFpsSampleInterval = sampleInterval; }
 
 	//! Returns whether the App is in full-screen mode or not.
 	virtual bool		isFullScreen() const = 0;
@@ -212,16 +212,17 @@ class App {
 	double				getElapsedSeconds() const { return mTimer.getSeconds(); }
 	//! Returns the number of animation frames which have elapsed since application launch
 	uint32_t			getElapsedFrames() const { return mFrameCount; }
-	
+
 	// utilities
 	static DataSourceRef		loadResource( const std::string &macPath, int mswID, const std::string &mswType );
 #if defined( CINDER_COCOA )
 	static DataSourcePathRef	loadResource( const std::string &macPath );
 	std::string					getResourcePath( const std::string &rsrcRelativePath );
+	std::string					getResourcePath();
 #else
 	static DataSourceBufferRef	loadResource( int mswID, const std::string &mswType );
 #endif
-	
+
 	//! Returns the path to the application on disk
 	virtual std::string			getAppPath() = 0;
 	//! Presents the user with a file-open dialog and returns the selected file path.
@@ -247,7 +248,7 @@ class App {
 	//! Restores the current rendering context to be the App's window or the screen in full-screen mode. Generally this is only necessary if the app has displayed a dialog box or some other external window.
 	void	restoreWindowContext();
 
-	
+
 	// DO NOT CALL - should be private but aren't for esoteric reasons
 	//! \cond
 	// Internal handlers - these are called into by AppImpl's. If you are calling one of these, you have likely strayed far off the path.
@@ -261,7 +262,7 @@ class App {
 	void	privateFileDrop__( const FileDropEvent &event );
 
 	virtual void	privateSetup__();
-	virtual void	privateResize__( int width, int height );	
+	virtual void	privateResize__( int width, int height );
 	virtual void	privateUpdate__();
 	virtual void	privateDraw__();
 	virtual void	privateShutdown__();
@@ -283,12 +284,12 @@ class App {
 	static void		prepareLaunch();
 	static void		executeLaunch( App *app, class Renderer *renderer, const char *title, int argc, char * const argv[] );
 	static void		cleanupLaunch();
-	
+
 	virtual void	launch( const char *title, int argc, char * const argv[] ) = 0;
 	//! \endcond
 
   private:
-  
+
 #if defined( CINDER_MSW )
 	friend class AppImplMsw;
 	shared_ptr<cinder::msw::dostream>	mOutputStream;
@@ -305,7 +306,7 @@ class App {
 
 	shared_ptr<Renderer>	mRenderer;
 	std::vector<Listener*>	mListeners;
-	
+
 	static App*		sInstance;
 };
 
@@ -351,6 +352,7 @@ inline DataSourceRef			loadResource( const std::string &macPath, int mswID, cons
 #if defined( CINDER_COCOA )
 	inline DataSourcePathRef	loadResource( const std::string &macPath ) { return App::get()->loadResource( macPath ); }
 	inline std::string			getResourcePath( const std::string &rsrcRelativePath ) { return App::get()->getResourcePath( rsrcRelativePath ); }
+	inline std::string			getResourcePath() { return App::get()->getResourcePath(); };
 #else
 	inline DataSourceBufferRef	loadResource( int mswID, const std::string &mswType ) { return App::get()->loadResource( mswID, mswType ); }
 #endif
