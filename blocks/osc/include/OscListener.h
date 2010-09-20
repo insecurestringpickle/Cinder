@@ -8,10 +8,10 @@
  This is a block for OSC Integration for Cinder framework developed by The Barbarian Group, 2010
 
 =======
- 
- 
+
+
  This is a block for OSC Integration for the Cinder framework (http://libcinder.org)
- 
+
 >>>>>>> 6f674c115518a5c3023337721b110bd7f80f54d6
  Redistribution and use in source and binary forms, with or without modification, are permitted provided that
  the following conditions are met:
@@ -42,36 +42,14 @@
 #include <boost/function.hpp>
 
 namespace cinder { namespace osc {
-<<<<<<< HEAD
 
-	class Listener {
-
-	public:
-		Listener();
-
-		void setup(int listen_port);
-
-		void addCallback( boost::function<void(Message* msg)> callbackFunction );
-
-		bool hasWaitingMessages();
-		bool getNextMessage(Message*);
-
-	private:
-		 shared_ptr<class OscListener> oscListener;
-
-	};
-
-} // namespace osc
-} // namespace cinder
-=======
-	
-class Listener {	
+class Listener {
   public:
 	Listener();
-	
+
 	void setup(int listen_port);
 	void shutdown();
-	
+
 	// Callback methods
 	//! Registers an asynchronous callback which fires whenever a new message is received.
 	CallbackId	registerMessageReceived( std::function<void (const osc::Message*)> callback );
@@ -85,10 +63,9 @@ class Listener {
 	bool hasWaitingMessages() const;
 	//! Gets the next message to be processed and puts it in \a resultMessage. Returns whether there was a message to process or not. Always \c false if callbacks have been registered using registerMessageReceived().
 	bool getNextMessage( Message *resultMessage );
-	
+
   private:
 	shared_ptr<class OscListener>   oscListener;
 };
 
 } } // namespace cinder::osc
->>>>>>> 6f674c115518a5c3023337721b110bd7f80f54d6

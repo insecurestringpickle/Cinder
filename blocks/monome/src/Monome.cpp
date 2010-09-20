@@ -1,6 +1,6 @@
 #include "Monome.h"
 
-namespace cinder{ namespace monome{
+namespace cinder{ namespace monome {
 
 
 const int Monome::ON  = 1;
@@ -40,7 +40,7 @@ void Monome::init(string _host, int _port_in, int _port_out)
     osc_port_out = _port_out;
 
     osc_in.setup(osc_port_in);
-    osc_in.addCallback(boost::bind(&Monome::onOscMessage, this, _1));
+    osc_in.registerMessageReceived(boost::bind(&Monome::onOscMessage, this, _1));
 
     osc_out.setup(osc_host, osc_port_out);
 }
@@ -74,7 +74,7 @@ void Monome::addCallback(MonomeCallback callback)
     callbacks.push_back(callback);
 }
 
-void Monome::onOscMessage(osc::Message* msg)
+void Monome::onOscMessage(const osc::Message* msg)
 {
 	if(msg->getAddress() == press_addr){
         MonomeButtonEvent event;

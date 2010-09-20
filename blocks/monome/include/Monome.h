@@ -34,7 +34,7 @@ class Monome
     void setSize(int _nx, int _ny);
 
     void addCallback(MonomeCallback callback);
-    void onOscMessage(osc::Message* msg);
+    void onOscMessage(const osc::Message* msg);
 
     void setLed(int x, int y, int state);
     void setLedCol(int x, int states[]);
