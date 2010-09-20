@@ -44,7 +44,10 @@ void setupCocoaTouchWindow( AppCocoaTouch *app )
 	[app->mState->mCinderView release];
 	[app->mState->mWindow makeKeyAndVisible];
 
+	[app->mState->mCinderView layoutIfNeeded];
 	app->privateSetup__();
+	[app->mState->mCinderView setAppSetupCalled:YES];
+	app->privateResize__( ci::app::ResizeEvent( ci::Vec2i( [app->mState->mCinderView bounds].size.width, [app->mState->mCinderView bounds].size.height ) ) );
 	
 	[app->mState->mCinderView startAnimation];
 }
@@ -118,13 +121,19 @@ void AppCocoaTouch::launch( const char *title, int argc, char * const argv[] )
 int	AppCocoaTouch::getWindowWidth() const
 {
 	::CGRect bounds = [mState->mCinderView bounds];
-	return ::CGRectGetWidth( bounds );
+	if( [mState->mCinderView respondsToSelector:NSSelectorFromString(@"contentScaleFactor")] )
+		return ::CGRectGetWidth( bounds ) * mState->mCinderView.contentScaleFactor;
+	else
+		return ::CGRectGetWidth( bounds );
 }
 
 int	AppCocoaTouch::getWindowHeight() const
 {
 	::CGRect bounds = [mState->mCinderView bounds];
-	return ::CGRectGetHeight( bounds );
+	if( [mState->mCinderView respondsToSelector:NSSelectorFromString(@"contentScaleFactor")] )
+		return ::CGRectGetHeight( bounds ) * mState->mCinderView.contentScaleFactor;
+	else
+		return ::CGRectGetHeight( bounds );
 }
 
 //! Enables the accelerometer
@@ -190,23 +199,43 @@ void AppCocoaTouch::privatePrepareSettings__()
 
 void AppCocoaTouch::privateTouchesBegan__( const TouchEvent &event )
 {
-	touchesBegan( event );
+	bool handled = false;
+	for( CallbackMgr<bool (TouchEvent)>::iterator cbIter = mCallbacksTouchesBegan.begin(); ( cbIter != mCallbacksTouchesBegan.end() ) && ( ! handled ); ++cbIter )
+		handled = (cbIter->second)( event );		
+	if( ! handled )	
+		touchesBegan( event );
 }
 
 void AppCocoaTouch::privateTouchesMoved__( const TouchEvent &event )
-{
-	touchesMoved( event );
+{	
+	bool handled = false;
+	for( CallbackMgr<bool (TouchEvent)>::iterator cbIter = mCallbacksTouchesMoved.begin(); ( cbIter != mCallbacksTouchesMoved.end() ) && ( ! handled ); ++cbIter )
+		handled = (cbIter->second)( event );		
+	if( ! handled )	
+		touchesMoved( event );
 }
 
 void AppCocoaTouch::privateTouchesEnded__( const TouchEvent &event )
-{
-	touchesEnded( event );
-}	
+{	
+	bool handled = false;
+	for( CallbackMgr<bool (TouchEvent)>::iterator cbIter = mCallbacksTouchesEnded.begin(); ( cbIter != mCallbacksTouchesEnded.end() ) && ( ! handled ); ++cbIter )
+		handled = (cbIter->second)( event );		
+	if( ! handled )	
+		touchesEnded( event );
+}
 
 void AppCocoaTouch::privateAccelerated__( const Vec3f &direction )
 {
 	Vec3f filtered = mLastAccel * (1.0f - mAccelFilterFactor) + direction * mAccelFilterFactor;
-	accelerated( AccelEvent( filtered, direction, mLastAccel, mLastRawAccel ) );
+
+	AccelEvent event( filtered, direction, mLastAccel, mLastRawAccel );
+	
+	bool handled = false;
+	for( CallbackMgr<bool (AccelEvent)>::iterator cbIter = mCallbacksAccelerated.begin(); ( cbIter != mCallbacksAccelerated.end() ) && ( ! handled ); ++cbIter )
+		handled = (cbIter->second)( event );		
+	if( ! handled )	
+		accelerated( event );
+
 	mLastAccel = filtered;
 	mLastRawAccel = direction;
 }

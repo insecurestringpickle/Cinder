@@ -198,6 +198,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\src\cinder\CaptureImplDirectShow.cpp"
+				>
+			</File>
+			<File
 				RelativePath="..\src\cinder\Channel.cpp"
 				>
 			</File>
@@ -263,6 +267,10 @@
 			</File>
 			<File
 				RelativePath="..\src\cinder\Rand.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\src\cinder\Ray.cpp"
 				>
 			</File>
 			<File
@@ -752,6 +760,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\include\cinder\Filesystem.h"
+				>
+			</File>
+			<File
 				RelativePath="..\include\cinder\Filter.h"
 				>
 			</File>
@@ -923,11 +935,11 @@
 					>
 				</File>
 				<File
-					RelativePath="..\include\cinder\app\FileDropEvent.h"
+					RelativePath="..\include\cinder\app\Event.h"
 					>
 				</File>
 				<File
-					RelativePath="..\include\cinder\app\FlintView.h"
+					RelativePath="..\include\cinder\app\FileDropEvent.h"
 					>
 				</File>
 				<File
@@ -940,6 +952,10 @@
 				</File>
 				<File
 					RelativePath="..\include\cinder\app\Renderer.h"
+					>
+				</File>
+				<File
+					RelativePath="..\include\cinder\app\ResizeEvent.h"
 					>
 				</File>
 				<File

@@ -2,10 +2,17 @@
  Copyright (c) 2010, Hector Sanchez-Pajares
  Aer Studio http://www.aerstudio.com
  All rights reserved.
+<<<<<<< HEAD
 
 
  This is a block for OSC Integration for Cinder framework developed by The Barbarian Group, 2010
 
+=======
+ 
+ 
+ This is a block for OSC Integration for the Cinder framework (http://libcinder.org)
+ 
+>>>>>>> 6f674c115518a5c3023337721b110bd7f80f54d6
  Redistribution and use in source and binary forms, with or without modification, are permitted provided that
  the following conditions are met:
 
@@ -27,12 +34,15 @@
 #pragma once
 
 #include "cinder/Cinder.h"
+#include "cinder/Function.h"
+
 #include "OscMessage.h"
 #include "OscArg.h"
 
 #include <boost/function.hpp>
 
 namespace cinder { namespace osc {
+<<<<<<< HEAD
 
 	class Listener {
 
@@ -53,3 +63,32 @@ namespace cinder { namespace osc {
 
 } // namespace osc
 } // namespace cinder
+=======
+	
+class Listener {	
+  public:
+	Listener();
+	
+	void setup(int listen_port);
+	void shutdown();
+	
+	// Callback methods
+	//! Registers an asynchronous callback which fires whenever a new message is received.
+	CallbackId	registerMessageReceived( std::function<void (const osc::Message*)> callback );
+	//! Registers an asynchronous callback which fires whenever a new message is received.
+	template<typename T>
+	CallbackId	registerMessageReceived( T *obj, void (T::*cb)(const osc::Message*) ) { return registerMessageReceived( std::bind1st( std::mem_fun( cb ), obj ) ); }
+	//! Unregisters an asynchronous callback previously registered with registerMessageReceived()
+	void		unregisterMessageReceived( CallbackId id );
+
+	//! Returns whether the are messages waiting to be processed via getNextMessage(). Always \c false if callbacks have been registered using registerMessageReceived().
+	bool hasWaitingMessages() const;
+	//! Gets the next message to be processed and puts it in \a resultMessage. Returns whether there was a message to process or not. Always \c false if callbacks have been registered using registerMessageReceived().
+	bool getNextMessage( Message *resultMessage );
+	
+  private:
+	shared_ptr<class OscListener>   oscListener;
+};
+
+} } // namespace cinder::osc
+>>>>>>> 6f674c115518a5c3023337721b110bd7f80f54d6

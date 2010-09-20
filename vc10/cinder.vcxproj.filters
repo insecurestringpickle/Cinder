@@ -384,6 +384,12 @@
     <ClCompile Include="..\src\cinder\qtime\MovieWriter.cpp">
       <Filter>Source Files\qtime</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\cinder\CaptureImplDirectShow.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\cinder\Ray.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\AntTweakBar\AntPerfTimer.h">
@@ -444,9 +450,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\include\cinder\Capture.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\include\cinder\CaptureCocoa.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\include\cinder\Channel.h">
@@ -605,9 +608,6 @@
     <ClInclude Include="..\include\cinder\app\FileDropEvent.h">
       <Filter>Header Files\app</Filter>
     </ClInclude>
-    <ClInclude Include="..\include\cinder\app\FlintView.h">
-      <Filter>Header Files\app</Filter>
-    </ClInclude>
     <ClInclude Include="..\include\cinder\app\KeyEvent.h">
       <Filter>Header Files\app</Filter>
     </ClInclude>
@@ -724,6 +724,21 @@
     </ClInclude>
     <ClInclude Include="..\include\cinder\qtime\MovieWriter.h">
       <Filter>Header Files\qtime</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\cinder\app\Event.h">
+      <Filter>Header Files\app</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\cinder\app\ResizeEvent.h">
+      <Filter>Header Files\app</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\cinder\Function.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\cinder\CaptureImplDirectShow.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\cinder\Filesystem.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

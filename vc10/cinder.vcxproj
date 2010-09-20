@@ -102,6 +102,7 @@
     <ClCompile Include="..\src\cinder\Buffer.cpp" />
     <ClCompile Include="..\src\cinder\Camera.cpp" />
     <ClCompile Include="..\src\cinder\Capture.cpp" />
+    <ClCompile Include="..\src\cinder\CaptureImplDirectShow.cpp" />
     <ClCompile Include="..\src\cinder\Channel.cpp" />
     <ClCompile Include="..\src\cinder\Color.cpp" />
     <ClCompile Include="..\src\cinder\DataSource.cpp" />
@@ -120,6 +121,7 @@
     <ClCompile Include="..\src\cinder\PolyLine.cpp" />
     <ClCompile Include="..\src\cinder\qtime\MovieWriter.cpp" />
     <ClCompile Include="..\src\cinder\Rand.cpp" />
+    <ClCompile Include="..\src\cinder\Ray.cpp" />
     <ClCompile Include="..\src\cinder\Rect.cpp" />
     <ClCompile Include="..\src\cinder\Serial.cpp" />
     <ClCompile Include="..\src\cinder\Shape2d.cpp" />
@@ -198,8 +200,13 @@
     <ClCompile Include="..\src\videoInput\videoInput.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\include\cinder\app\Event.h" />
+    <ClInclude Include="..\include\cinder\app\ResizeEvent.h" />
     <ClInclude Include="..\include\cinder\audio\SourceFileWav.h" />
+    <ClInclude Include="..\include\cinder\CaptureImplDirectShow.h" />
+    <ClInclude Include="..\include\cinder\Filesystem.h" />
     <ClInclude Include="..\include\cinder\qtime\MovieWriter.h" />
+    <ClInclude Include="..\include\cinder\Function.h" />
     <ClInclude Include="..\include\cinder\UrlImplWinInet.h" />
     <ClInclude Include="..\src\AntTweakBar\AntPerfTimer.h" />
     <ClInclude Include="..\src\AntTweakBar\AntTweakBar.h" />
@@ -221,7 +228,6 @@
     <ClInclude Include="..\include\cinder\Buffer.h" />
     <ClInclude Include="..\include\cinder\Camera.h" />
     <ClInclude Include="..\include\cinder\Capture.h" />
-    <ClInclude Include="..\include\cinder\CaptureCocoa.h" />
     <ClInclude Include="..\include\cinder\Channel.h" />
     <ClInclude Include="..\include\cinder\ChanTraits.h" />
     <ClInclude Include="..\include\cinder\Cinder.h" />
@@ -274,7 +280,6 @@
     <ClInclude Include="..\include\cinder\app\AppImplMswScreenSaver.h" />
     <ClInclude Include="..\include\cinder\app\AppScreenSaver.h" />
     <ClInclude Include="..\include\cinder\app\FileDropEvent.h" />
-    <ClInclude Include="..\include\cinder\app\FlintView.h" />
     <ClInclude Include="..\include\cinder\app\KeyEvent.h" />
     <ClInclude Include="..\include\cinder\app\MouseEvent.h" />
     <ClInclude Include="..\include\cinder\app\Renderer.h" />
