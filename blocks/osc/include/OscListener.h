@@ -2,17 +2,9 @@
  Copyright (c) 2010, Hector Sanchez-Pajares
  Aer Studio http://www.aerstudio.com
  All rights reserved.
-<<<<<<< HEAD
-
-
- This is a block for OSC Integration for Cinder framework developed by The Barbarian Group, 2010
-
-=======
-
 
  This is a block for OSC Integration for the Cinder framework (http://libcinder.org)
 
->>>>>>> 6f674c115518a5c3023337721b110bd7f80f54d6
  Redistribution and use in source and binary forms, with or without modification, are permitted provided that
  the following conditions are met:
 
